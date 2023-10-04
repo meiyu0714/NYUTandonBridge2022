@@ -1,0 +1,123 @@
+Name： Meiyu Zhang
+NYU email: mz3601@nyu.edu
+
+1) (3pts) Multiple Choice: d
+2)(3pts) Multiple Choice:  a
+3)(3pts) Multiple Choice: a
+4)(3pts) Multiple Choice: b
+5)(3pts) Multiple Choice: e
+6)(3pts) Multiple Choice: a
+
+7) (15pts) Short answer: 
+What is called the race condition is that when a shared resource is write and read at the same time by different processes,
+it may cause a serious problem. For example, if a credit card account is used by different ATMs at the same time but with 
+different withdraw and input operations, the final outcome for the bank account may not be accurate. 
+That is the same problem happened here. The different i do the different jobs. But if the cpu is on and off to finish this job,
+, like the cpu may cut in to do the first job but in the middle cut out to do the priorie job and then cut back. The 'i's may be interrupted
+and thus do a not so perfect job for this piece of code. Therefore, a critical section should be provided to help the code
+synchronized, meaning all function should be run atomic. Then, the problem with the code will be solve. 
+
+8) (10pts) Short answer:
+Before the CIDR method, people divided the ip address by widly differeing sizes of old "class". The most 
+often used commercial classes are class A, class B and class C. They are all 32 bits numbers to help the divide the 
+ip addresses. Class A is 255.0.0.0, class B is 255.255.0.0, class C is 255.255.255.0 
+If there is an university which applied for an ip address and need to hold 500 hosts. The university cannot
+apply for a class C ip address because a class C can only hold 254 hosts(2^8 - 2). It can only apply for the class B ip
+address. A class B ip address can have 65534 hosts(2^16-2). Then 65034 addresses will be wasted. It is a huge waste 
+for IPv4 addresses since they are very much limited.
+
+That is when the CIDR(Classless InterDomain Routing) overcome disadvantage of old "classes" networks. For example,
+if you want to design a network which was expected to have 350 hosts. You need to use this 350 hosts to decide how 
+many bits you need in an ip address to hold this 350 different host. 8 bits can hold 254 hosts (2^8 - 2), 9 bits can hold 
+510 hosts(2^9 - 2 = 512 - 2 = 510). Therefore, 9 bits is perfect for us to be used to hold 500 hosts since 8 bits is a little bit
+too small but 9 bits are enough. Then, the rest of the bits can be used for ip addresses. The CIDR for this network will be 
+11111111.11111111.11111110.00000000 (binary form). subnet = 32 - 9 = 23. 
+Therefore the network should be ip address/23
+
+9) (10pts) Short answer:
+During the active TCP connection, if sender received a three ACK's for the same packet, it means that one packet is lost. 
+The TCP has a system called fast retransmission. If one packet seq num = 104 and byte = 1 was lost, for example, but the 
+rest of the packet like packet#109, packet#108 still received. The receiver will send the 3 ACKs for seq#104, meaning that
+packet#104 was not found, please send again. It means that the packets before # 104 were all received(accumulative), 
+but the #104 was lost and need to be resent. The sender will not wait but send packet #104 immediately to the receiver. 
+The following packets will all be sent it again, like#109, #107, no matter if they received or not because that is how the TCP
+system respond.
+
+10)(10pts) Short answer:
+DNS is a protocol based on UPD. It is a hierachy system, which means that it has an "root" server, primary server, secondary server
+and also cache in your own computer browser or lay in proxy server or ISP. The DNS normally do the following things. It knows the 
+ip address of certain domain. Or it knows where to get that information. But the information in DNS is not always right. A server may
+change its ip address and then the following domain may still have the old address and route the information to the wrong socket.
+So, it also need to check for the right addresses, even though they have a cache in their memory.
+That is the background of the DNS iterative query is performed. THe source and the destination of each packet include the server and 
+server above it, or the computer, depending on different task. And what you expect to see into include the sockets(the destination ip address
+, the source ip address, the destination port normally is 53, the source port) and the related information.
+
+11)(10pts) Short answer:
+The kernel is the interface betweent the hardware and applications. It is the core of the operation systems. It helps to abstract
+the hardwares and thus to help the application developers to design the applications but do not need to know how the hardware
+actually works.
+Thus, any change to any piece of code that is part of the kernel can lead to the crush of the whole computer. This include the 
+mis-point of wrong address or overload the physical address of useful program or information and so on. Therefore, in OS,
+a monolithic kernel may enpower too many codes and thus may add the security danger to the computer and lead to the crush. 
+Any attack to any peice of code can lead to the danger of the codes. Secondly, the microkernel architecture can save the resources 
+to run the operating system. A monolithic kernel may lead to overuse the system. The main memory may be taken too much by 
+the os and thus have limited space for the upcoming tasks and lead to the poor performance of computer. 
+
+
+12)(10pts) Short answer:
+Kernel mode threads and user level threads can be transferred with system calls. For example, in a os system, if you want to 
+do some I/O work, or in situation where your computer pops "you need administrative admission for this. Please confirm". 
+It means that you will make some change to the kernel. You need to change the user level thread to kernel permitted thread
+to enable them to do the works with permissions. Then, you can use system calls or interrupts to do the switching. After the
+threads finish their jobs in kernel modes, you can make this transfer back to normal modes to prevent future unexpected 
+change to kernel and thus to prevent future danger to your computer.
+
+13) (17pts) Short answer:
+template <class T>
+class LList;
+template <class T>
+class LListNode {
+    T data;
+    LListNode<T>* next;
+public:
+    LListNode(const T& item = T(), LListNode<T>* newnext = NULL){
+        data = item;
+        next = newnext;
+    }    
+    friend class LList<T>;
+}
+template <class T>
+class LList{
+    LListNode<T>* head;
+    LListNode<T>* recursiveCopy(LListNode<T>* rhsHead);
+publick:
+   LList(): head(nullptr);
+   ~LList(){clear();}
+   LList(const LList<T>&rhs):head(nullptr){*this = rhs;}
+   LList& operator=(const LList&rhs);
+   void insertAtHead(const T& item);
+    T removeFromHead();
+    bool isEmpty(){return head == nullptr;}
+    void clear(){while (!isEmpty()) removeFromHead();}
+    int size() const;
+    LList& operator +(const LList&rhs){
+        LList temp_list;
+        LListNode* temp_node = &temp_list->head;
+        LList* copy_list = recursiveCopy(rhs);
+        for(temp_node != nullptr){
+           temp_node = temp_node->next; 
+           //find the final node of the list
+        }
+        temp->next = temp_list->head;
+        return &temp_list;
+    }
+    LList& operator*(int num){
+        LList newList;
+        newList = recursiveCopy(head);
+        for(int i = 0 ; i < num; i ++){
+            newList = newList + newList;
+        }
+        return *newList;
+    }
+}

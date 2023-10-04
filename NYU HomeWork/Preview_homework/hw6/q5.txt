@@ -1,0 +1,19 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main (){
+    string LN, FM, MM;
+    
+    cout<<"Please enter your fn, mn, and last n: "<<endl;
+    cin>>FM>>MM>>LN;
+    
+    if(MM[1] == '.'){
+    cout<<LN<<", "<<FM<<" "<<MM;}
+    else
+     cout<<LN<<", "<<FM<<" "<<MM[0]<<".";
+    
+    
+    return 0;
+} //逻辑正确，variable的名字需要修改一下

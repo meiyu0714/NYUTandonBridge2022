@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+const int DAYS_PER_WEEK = 7;
+int printMonthCalender(int numOfDays, int startingDay);
+
+int main()
+{
+    int numOfDays, startingDay, last_day;
+    
+    cout<<"Please enter the number of days in the month: ";
+    cin>>numOfDays;
+    
+    cout<<"Please enter a number 1-7 that represents the day in the week of the first day "
+    <<"in that month(1 for Monday, 2 for Tuesday, etc.): ";
+    cin>>startingDay;
+    
+    last_day = printMonthCalender(numOfDays, startingDay);
+
+    return 0;
+}
+
+int printMonthCalender(int numOfDays, int startingDay){
+    int last_day;
+    
+    cout<<"Mon"<<"\t"<<"Tue"<<"\t"<<"Wed"<<"\t"<<"Thr"<<"\t"
+        <<"Fri"<<"\t"<<"Sat"<<"\t"<<"Sun"<<endl;
+    for(int i = 1; i <= startingDay -1; i++){
+        cout<<" "<<"\t";}
+    for(int k = 1; k <= numOfDays; k ++){
+        int x = k + startingDay -1;
+        if( x % DAYS_PER_WEEK == 0)
+        cout<<k<<"\t"<<endl;
+        else  
+        cout<<k<<"\t";
+    }    
+    
+    last_day = (numOfDays + startingDay) % 7;
+    
+    return last_day;
+    }        
